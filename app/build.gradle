@@ -48,4 +48,16 @@ dependencies {
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+
+    // Converter (e.g., for JSON with Gson)
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    // RxJava adapter (optional)
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+
+    // Kotlin Coroutines adapter (optional)
+    implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
 }
