@@ -1,14 +1,7 @@
-package com.project3.recipes.data
+package com.project3.recipes.data.api
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Path
-
-interface MealApiService {
-    @GET("/search.php?s={searchTerm}")
-    suspend fun getMealsBySearchTerm(@Path("searchTerm") searchTerm: String): List<Recipe>
-}
 
 object RetrofitClient {
     private const val BASE_URL = "https://www.themealdb.com/api/json/v1/1"
