@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.project3.recipes.R
 import com.project3.recipes.data.model.Meal
 
@@ -18,6 +19,7 @@ class RecipesAdapter(
     }
     class RecipesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val recipeName: TextView = view.findViewById(R.id.recipe_name)
+        val thumbnail: ImageView = view.findViewById(R.id.recipe_thumbnail)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipesViewHolder {
@@ -28,6 +30,8 @@ class RecipesAdapter(
     override fun onBindViewHolder(holder: RecipesViewHolder, position: Int) {
         val meal = meals[position]
         holder.recipeName.text = meal.name
+
+        holder.thumbnail.load(meal.thumbnail)
     }
 
     override fun getItemCount(): Int = meals.size
