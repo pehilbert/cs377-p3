@@ -1,4 +1,4 @@
-package com.project3.recipes.data.api
+package com.project3.recipes.data.network
 
 import retrofit2.http.GET
 import retrofit2.http.Path

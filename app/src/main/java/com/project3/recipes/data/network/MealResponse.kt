@@ -1,4 +1,4 @@
-package com.project3.recipes.data.api
+package com.project3.recipes.data.network
 
 data class MealResponse(
     val meals: List<MealResponseItem>

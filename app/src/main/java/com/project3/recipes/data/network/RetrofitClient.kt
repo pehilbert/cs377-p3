@@ -1,4 +1,4 @@
-package com.project3.recipes.data.api
+package com.project3.recipes.data.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
