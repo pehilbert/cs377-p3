@@ -16,4 +16,11 @@
         android:name="com.project3.recipes.ui.FavoriteRecipesFragment"
         android:label="@string/menu_favorite_recipes"
         tools:layout="@layout/fragment_favorite_recipes" />
+
+    <fragment
+        android:id="@+id/nav_recipe_details"
+        android:name="com.project3.recipes.ui.RecipeDetailsFragment"
+        android:label="Recipe Details"
+        tools:layout="@layout/fragment_recipe_details">
+    </fragment>
 </navigation>

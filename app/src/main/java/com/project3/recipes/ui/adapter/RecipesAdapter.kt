@@ -4,8 +4,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.project3.recipes.R
@@ -17,9 +19,11 @@ class RecipesAdapter(
     init {
         Log.d("RecipesAdapter", "meals: ${meals.map {it.name}}")
     }
+
     class RecipesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val recipeName: TextView = view.findViewById(R.id.recipe_name)
         val thumbnail: ImageView = view.findViewById(R.id.recipe_thumbnail)
+        val detailsButton: Button = view.findViewById(R.id.details_button)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipesViewHolder {
@@ -30,8 +34,11 @@ class RecipesAdapter(
     override fun onBindViewHolder(holder: RecipesViewHolder, position: Int) {
         val meal = meals[position]
         holder.recipeName.text = meal.name
-
         holder.thumbnail.load(meal.thumbnail)
+
+        holder.detailsButton.setOnClickListener {
+            holder.itemView.findNavController().navigate(R.id.nav_recipe_details)
+        }
     }
 
     override fun getItemCount(): Int = meals.size
