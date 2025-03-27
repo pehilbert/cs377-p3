@@ -13,7 +13,9 @@ import kotlinx.coroutines.launch
 
 class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
     private val _fetchedRecipes = MutableLiveData<List<Meal>>()
+    private val _currentRecipeDetails = MutableLiveData<Meal>()
     val fetchedRecipes: LiveData<List<Meal>> get() = _fetchedRecipes
+    val currentRecipeDetails: LiveData<Meal> get() = _currentRecipeDetails
 
     fun searchForRecipes(searchTerm: String) {
         viewModelScope.launch {
@@ -27,6 +29,11 @@ class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
                 Log.e("RecipeViewModel", "Error searching for recipes: ${exception.message}")
             }
         }
+    }
+
+    fun setRecipeDetails(recipe: Meal) {
+        Log.d("RecipeViewModel", "Set recipe details to ${recipe.name}")
+        _currentRecipeDetails.value = recipe
     }
 
     // Map a MealResponseItem object to a more usable Meal object

@@ -17,7 +17,7 @@ import com.project3.recipes.viewmodel.RecipeViewModelFactory
 class RecipeFragment : Fragment() {
     private val recipeViewModel: RecipeViewModel by lazy {
         ViewModelProvider(
-            this,
+            requireActivity(),
             RecipeViewModelFactory(RecipeRepository())
         ).get(RecipeViewModel::class.java)
     }
@@ -36,7 +36,7 @@ class RecipeFragment : Fragment() {
         recipesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         recipeViewModel.fetchedRecipes.observe(viewLifecycleOwner) { meals ->
-            recipesRecyclerView.adapter = RecipesAdapter(meals)
+            recipesRecyclerView.adapter = RecipesAdapter(meals, recipeViewModel)
         }
 
         recipeViewModel.searchForRecipes("")
