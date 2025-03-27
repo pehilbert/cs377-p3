@@ -52,13 +52,8 @@ class RecipeDetailsFragment(): Fragment() {
         recipeNameText.text = recipe?.name
         recipeThumbnail.load(recipe?.thumbnail)
 
-        if (recipe != null) {
-            // Put the list of ingredients into a single string, which is a bulleted list
-            val ingredientsText = recipe?.ingredients?.joinToString("\n") { "• $it" }
-
-            // Set text of ingredients list
-            recipeIngredientsList.text = ingredientsText
-        }
+        // Set text of ingredients list
+        recipeIngredientsList.text = recipe?.ingredients
 
         recipeInstructions.text = recipe?.instructions
     }

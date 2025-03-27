@@ -48,12 +48,14 @@ class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
             }
         }
 
+        val strIngredients = ingredients.joinToString("\n") { "• $it" }
+
         // populate Meal object with the rest of the values
         return Meal(
             id = item.idMeal ?: "unknown",
             name = item.strMeal ?: "Unnamed",
             thumbnail = item.strMealThumb ?: "",
-            ingredients = ingredients,
+            ingredients = strIngredients,
             instructions = item.strInstructions
         )
     }

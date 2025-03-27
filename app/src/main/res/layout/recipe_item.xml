@@ -7,19 +7,23 @@
 
     <ImageView
         android:id="@+id/recipe_thumbnail"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginEnd="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintHeight_default="wrap"
+        app:layout_constraintWidth_default="wrap"/>
 
     <Button
         android:id="@+id/details_button"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Details"
         android:textAllCaps="false"
+        android:padding="2dp"
         android:layout_margin="10dp"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/recipe_thumbnail"
@@ -28,7 +32,7 @@
 
     <TextView
         android:id="@+id/recipe_name"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Recipe Name"
         android:textSize="24sp"
