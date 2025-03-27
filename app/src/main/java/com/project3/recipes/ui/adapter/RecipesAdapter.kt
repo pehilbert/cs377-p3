@@ -25,6 +25,7 @@ class RecipesAdapter(
         Log.d("RecipesAdapter", "meals: ${meals.map {it.name}}")
     }
 
+    // Get UI elements in each list item
     class RecipesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val recipeName: TextView = view.findViewById(R.id.recipe_name)
         val thumbnail: ImageView = view.findViewById(R.id.recipe_thumbnail)
@@ -36,11 +37,14 @@ class RecipesAdapter(
         return RecipesViewHolder(view)
     }
 
+    // Populate each list item with a particular recipe item
     override fun onBindViewHolder(holder: RecipesViewHolder, position: Int) {
         val meal = meals[position]
         holder.recipeName.text = meal.name
         holder.thumbnail.load(meal.thumbnail)
 
+        // Set current recipe details in ViewModel, and navigate to recipe details screen
+        // when the details button is clicked
         holder.detailsButton.setOnClickListener {
             recipeViewModel.setRecipeDetails(meal)
             holder.itemView.findNavController().navigate(R.id.nav_recipe_details)

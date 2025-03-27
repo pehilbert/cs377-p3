@@ -32,9 +32,11 @@ class RecipeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // initialize UI elements
         val recipesRecyclerView = view.findViewById<RecyclerView>(R.id.recipesRecyclerView)
         recipesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
+        // Observe fetched recipes in ViewModel, and update the list of fetched recipes
         recipeViewModel.fetchedRecipes.observe(viewLifecycleOwner) { meals ->
             recipesRecyclerView.adapter = RecipesAdapter(meals, recipeViewModel)
         }

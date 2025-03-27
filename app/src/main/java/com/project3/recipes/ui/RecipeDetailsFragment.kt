@@ -39,11 +39,13 @@ class RecipeDetailsFragment(): Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Get UI elements
         val recipeNameText: TextView = view.findViewById(R.id.recipe_details_name)
         val recipeThumbnail: ImageView = view.findViewById(R.id.recipe_details_thumbnail)
         val recipeIngredientsList: TextView = view.findViewById(R.id.recipe_details_ingredients_list)
         val recipeInstructions: TextView = view.findViewById(R.id.recipe_details_instructions)
 
+        // Populate UI elements with proper values
         val recipe = recipeViewModel.currentRecipeDetails.value
         Log.d("RecipeDetailsFragment", "Displaying recipe details: $recipe")
 
@@ -51,7 +53,10 @@ class RecipeDetailsFragment(): Fragment() {
         recipeThumbnail.load(recipe?.thumbnail)
 
         if (recipe != null) {
+            // Put the list of ingredients into a single string, which is a bulleted list
             val ingredientsText = recipe?.ingredients?.joinToString("\n") { "• $it" }
+
+            // Set text of ingredients list
             recipeIngredientsList.text = ingredientsText
         }
 
