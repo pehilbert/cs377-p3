@@ -11,7 +11,7 @@ import kotlinx.coroutines.withContext
 class RecipeRepository {
     suspend fun fetchMealsWithSearchTerm(searchTerm: String): MealResponse {
         val response = RetrofitClient.apiService.getMealsBySearchTerm(searchTerm)
-        Log.d("RecipeRepository", "MealResponse: ${response.meals.map {it.strMeal}}")
+        Log.d("RecipeRepository", "MealResponse: ${response.meals?.map {it.strMeal} ?: emptyList()}")
         return response
     }
 }

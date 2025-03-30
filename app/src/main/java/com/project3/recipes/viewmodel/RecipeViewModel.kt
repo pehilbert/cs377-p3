@@ -22,7 +22,9 @@ class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
             try {
                 // convert each MealResponseItem to a Meal before updating fetched recipes
                 val response: MealResponse = repository.fetchMealsWithSearchTerm(searchTerm)
-                _fetchedRecipes.value = response.meals.map { item -> mealResponseItemToMeal(item) }
+                _fetchedRecipes.value = response.meals
+                    ?.map { item -> mealResponseItemToMeal(item) }
+                    ?: emptyList()
                 Log.d("RecipeViewModel", "Updated fetched recipes: ${_fetchedRecipes.value!!.map { it.name }}")
 
             } catch (exception: Exception) {
@@ -52,9 +54,9 @@ class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
 
         // populate Meal object with the rest of the values
         return Meal(
-            id = item.idMeal ?: "unknown",
-            name = item.strMeal ?: "Unnamed",
-            thumbnail = item.strMealThumb ?: "",
+            id = item.idMeal,
+            name = item.strMeal,
+            thumbnail = item.strMealThumb,
             ingredients = strIngredients,
             instructions = item.strInstructions
         )

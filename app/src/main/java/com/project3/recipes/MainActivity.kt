@@ -9,18 +9,28 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.project3.recipes.databinding.ActivityMainBinding
+import com.project3.recipes.repository.RecipeRepository
+import com.project3.recipes.viewmodel.RecipeViewModel
+import com.project3.recipes.viewmodel.RecipeViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private lateinit var recipeViewModel: RecipeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        recipeViewModel = ViewModelProvider(
+            this,
+            RecipeViewModelFactory(RecipeRepository())
+        ).get(RecipeViewModel::class.java)
 
         setSupportActionBar(binding.appBarMain.toolbar)
 
@@ -35,6 +45,8 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        recipeViewModel.searchForRecipes("")
     }
 
     override fun onSupportNavigateUp(): Boolean {
