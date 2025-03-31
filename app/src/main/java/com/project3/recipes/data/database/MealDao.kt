@@ -7,6 +7,7 @@ import com.project3.recipes.data.model.Meal
 import kotlinx.coroutines.flow.Flow
 import androidx.room.Query
 
+// DAO for favorite recipes
 @Dao
 interface MealDao {
     @Insert

@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.project3.recipes.data.model.Meal
 
+// Database for favorite recipes
 @Database(entities = [Meal::class], version = 1, exportSchema = false)
 abstract class MealDatabase : RoomDatabase() {
     abstract fun mealDao(): MealDao

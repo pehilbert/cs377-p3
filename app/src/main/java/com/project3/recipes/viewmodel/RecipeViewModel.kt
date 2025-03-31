@@ -10,7 +10,6 @@ import com.project3.recipes.data.model.Meal
 import com.project3.recipes.data.network.MealResponse
 import com.project3.recipes.data.network.MealResponseItem
 import com.project3.recipes.repository.RecipeRepository
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
@@ -25,6 +24,7 @@ class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
     val currentRecipeDetails: LiveData<Meal> get() = _currentRecipeDetails
     val favoriteRecipes: LiveData<List<Meal>> = repository.getFavoriteMeals().asLiveData()
 
+    // Dynamically fetch recipes from the MealDB API
     fun searchForRecipes(searchTerm: String) {
         viewModelScope.launch {
             _isLoading.value = true
@@ -48,11 +48,13 @@ class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
         }
     }
 
+    // Update the recipe details screen
     fun setRecipeDetails(recipe: Meal) {
         Log.d("RecipeViewModel", "Set recipe details to ${recipe.name}")
         _currentRecipeDetails.value = recipe
     }
 
+    // Add a recipe to favorites
     fun addToFavorites(recipe: Meal) {
         Log.d("RecipeViewModel", "Adding to favorites: ${recipe.name}")
 
@@ -61,6 +63,7 @@ class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
         }
     }
 
+    // Remove a recipe from favorites
     fun removeFromFavorites(recipe: Meal) {
         Log.d("RecipeViewModel", "Removing from favorites: ${recipe.name}")
 
@@ -69,7 +72,7 @@ class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
         }
     }
 
-    // Map a MealResponseItem object to a more usable Meal object
+    // Utility to map a MealResponseItem object to a more usable Meal object
     private fun mealResponseItemToMeal(item: MealResponseItem): Meal {
         // Convert the ingredients and measures to a single list of strings
         val ingredients = mutableListOf<String>()
