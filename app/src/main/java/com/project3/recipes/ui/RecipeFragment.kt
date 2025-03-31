@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.SearchView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -56,6 +57,13 @@ class RecipeFragment : Fragment() {
             loadingSpinner.visibility = if (loading) View.VISIBLE else View.GONE
         }
 
+        // Show an error Toast when there is an API error
+        recipeViewModel.apiError.observe(viewLifecycleOwner) { errorOccurred ->
+            if (errorOccurred) {
+                Toast.makeText(view.context, "There was an error fetching recipes.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         // Observe fetched recipes in ViewModel, and update the list of fetched recipes
         val recipesAdapter = RecipesAdapter(
             recipeViewModel.fetchedRecipes.value ?: emptyList(),
@@ -75,6 +83,7 @@ class RecipeFragment : Fragment() {
             recipesAdapter.notifyDataSetChanged()
         }
 
+        // dynamically search for recipes based on input in the SearchView
         searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 // clean search query, ensure the user actually typed something

@@ -17,8 +17,10 @@ class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
     private val _fetchedRecipes = MutableLiveData<List<Meal>>()
     private val _currentRecipeDetails = MutableLiveData<Meal>()
     private val _isLoading = MutableLiveData(false)
+    private val _apiError = MutableLiveData(false)
 
     val isLoading: LiveData<Boolean> get() = _isLoading
+    val apiError: LiveData<Boolean> get() = _apiError
     val fetchedRecipes: LiveData<List<Meal>> get() = _fetchedRecipes
     val currentRecipeDetails: LiveData<Meal> get() = _currentRecipeDetails
     val favoriteRecipes: LiveData<List<Meal>> = repository.getFavoriteMeals().asLiveData()
@@ -33,9 +35,12 @@ class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
                 _fetchedRecipes.value = response.meals
                     ?.map { item -> mealResponseItemToMeal(item) }
                     ?: emptyList()
-                Log.d("RecipeViewModel", "Updated fetched recipes: ${_fetchedRecipes.value!!.map { it.name }}")
 
+                _apiError.value = false
+                Log.d("RecipeViewModel", "Updated fetched recipes: ${_fetchedRecipes.value!!.map { it.name }}")
             } catch (exception: Exception) {
+                _apiError.value = true
+                _fetchedRecipes.value = emptyList()
                 Log.e("RecipeViewModel", "Error searching for recipes: ${exception.message}")
             } finally {
                 _isLoading.value = false
