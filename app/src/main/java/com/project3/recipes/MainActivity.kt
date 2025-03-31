@@ -9,7 +9,9 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModelProvider
+import com.project3.recipes.data.database.MealDatabase
 import com.project3.recipes.databinding.ActivityMainBinding
 import com.project3.recipes.repository.RecipeRepository
 import com.project3.recipes.viewmodel.RecipeViewModel
@@ -30,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         recipeViewModel = ViewModelProvider(
             this,
-            RecipeViewModelFactory(RecipeRepository())
+            RecipeViewModelFactory(RecipeRepository(MealDatabase.getInstance(this).mealDao()))
         ).get(RecipeViewModel::class.java)
 
         setSupportActionBar(binding.appBarMain.toolbar)

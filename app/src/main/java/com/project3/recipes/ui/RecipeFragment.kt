@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.project3.recipes.R
+import com.project3.recipes.data.database.MealDatabase
 import com.project3.recipes.repository.RecipeRepository
 import com.project3.recipes.ui.adapter.RecipesAdapter
 import com.project3.recipes.viewmodel.RecipeViewModel
@@ -24,7 +25,7 @@ class RecipeFragment : Fragment() {
     private val recipeViewModel: RecipeViewModel by lazy {
         ViewModelProvider(
             requireActivity(),
-            RecipeViewModelFactory(RecipeRepository())
+            RecipeViewModelFactory(RecipeRepository(MealDatabase.getInstance(requireActivity()).mealDao()))
         ).get(RecipeViewModel::class.java)
     }
 
@@ -45,8 +46,19 @@ class RecipeFragment : Fragment() {
         val searchBar = view.findViewById<SearchView>(R.id.recipe_search_bar)
 
         // Observe fetched recipes in ViewModel, and update the list of fetched recipes
+        val recipesAdapter = RecipesAdapter(
+            recipeViewModel.fetchedRecipes.value ?: emptyList(),
+            recipeViewModel
+        )
+        recipesRecyclerView.adapter = recipesAdapter
+
         recipeViewModel.fetchedRecipes.observe(viewLifecycleOwner) { meals ->
-            recipesRecyclerView.adapter = RecipesAdapter(meals, recipeViewModel)
+            recipesAdapter.setMeals(meals)
+        }
+
+        // Update favorite statuses when changed
+        recipeViewModel.favoriteRecipes.observe(viewLifecycleOwner) { _ ->
+            recipesAdapter.setMeals(recipeViewModel.fetchedRecipes.value ?: emptyList())
         }
 
         searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

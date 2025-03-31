@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.project3.recipes.R
+import com.project3.recipes.data.database.MealDatabase
 import com.project3.recipes.data.model.Meal
 import com.project3.recipes.repository.RecipeRepository
 import com.project3.recipes.ui.adapter.RecipesAdapter
@@ -25,7 +26,7 @@ class RecipeDetailsFragment(): Fragment() {
     private val recipeViewModel: RecipeViewModel by lazy {
         ViewModelProvider(
             requireActivity(),
-            RecipeViewModelFactory(RecipeRepository())
+            RecipeViewModelFactory(RecipeRepository(MealDatabase.getInstance(requireActivity()).mealDao()))
         ).get(RecipeViewModel::class.java)
     }
 
