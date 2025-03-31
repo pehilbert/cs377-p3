@@ -26,7 +26,7 @@
                 android:layout_height="match_parent"
                 android:gravity="start|center_vertical"
                 android:textAlignment="viewStart"
-                android:text="Recipe Name"
+                android:text="@string/recipe_name_title"
                 android:textSize="28sp" />
         </LinearLayout>
 
@@ -41,13 +41,12 @@
         <TextView
             android:id="@+id/recipe_details_ingredients_list"
             android:textSize="18sp"
-            android:text="• some ingredient\n• some other ingredient"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"/>
 
         <TextView
-            android:text="Instructions"
+            android:text="@string/instructions_title"
             android:textSize="28sp"
             android:textStyle="bold"
             android:layout_width="match_parent"
@@ -56,7 +55,6 @@
 
         <TextView
             android:id="@+id/recipe_details_instructions"
-            android:text="1. do something\n2. do something else"
             android:textSize="18sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

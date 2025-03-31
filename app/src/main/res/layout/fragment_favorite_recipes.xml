@@ -10,7 +10,7 @@
         android:id="@+id/no_results_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No favorite recipes yet."
+        android:text="@string/no_favorite_recipes_text"
         android:gravity="center"
         android:textSize="18sp"
         android:visibility="gone"

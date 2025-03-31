@@ -9,4 +9,10 @@
 
     <string name="menu_recipes">Recipes</string>
     <string name="menu_favorite_recipes">Favorites</string>
+    <string name="add_to_favorites">Add to favorites</string>
+    <string name="recipe_thumbnail_desc">Recipe Thumbnail</string>
+    <string name="recipe_name_title">Recipe Name</string>
+    <string name="instructions_title">Instructions</string>
+    <string name="no_recipes_found_text">No recipes found.</string>
+    <string name="no_favorite_recipes_text">No favorite recipes yet.</string>
 </resources>
