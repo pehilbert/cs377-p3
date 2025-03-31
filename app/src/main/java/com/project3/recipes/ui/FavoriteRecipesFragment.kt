@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,9 +38,14 @@ class FavoriteRecipesFragment : Fragment() {
         val recipesRecyclerView = view.findViewById<RecyclerView>(R.id.recipesRecyclerView)
         recipesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
+        val noResultsTextView = view.findViewById<TextView>(R.id.no_results_text)
+
         // Observe fetched recipes in ViewModel, and update the list of fetched recipes
         recipeViewModel.favoriteRecipes.observe(viewLifecycleOwner) { meals ->
             recipesRecyclerView.adapter = RecipesAdapter(meals, recipeViewModel)
+
+            noResultsTextView.visibility =
+                if (meals.isNullOrEmpty()) View.VISIBLE else View.GONE
         }
     }
 }

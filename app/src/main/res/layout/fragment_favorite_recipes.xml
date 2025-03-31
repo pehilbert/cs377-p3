@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.FavoriteRecipesFragment">
 
+    <TextView
+        android:id="@+id/no_results_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No favorite recipes yet."
+        android:gravity="center"
+        android:textSize="18sp"
+        android:visibility="gone"
+        android:padding="16dp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recipesRecyclerView"
         android:layout_height="wrap_content"

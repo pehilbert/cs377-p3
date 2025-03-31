@@ -1,5 +1,6 @@
 package com.project3.recipes.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.SearchView
+import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -36,6 +39,7 @@ class RecipeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_recipe, container, false)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -43,7 +47,14 @@ class RecipeFragment : Fragment() {
         val recipesRecyclerView = view.findViewById<RecyclerView>(R.id.recipesRecyclerView)
         recipesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
+        val noResultsTextView = view.findViewById<TextView>(R.id.no_results_text)
+        val loadingSpinner = view.findViewById<ProgressBar>(R.id.loading_spinner)
         val searchBar = view.findViewById<SearchView>(R.id.recipe_search_bar)
+
+        // Show loading spinner when ViewModel is loading
+        recipeViewModel.isLoading.observe(viewLifecycleOwner) { loading ->
+            loadingSpinner.visibility = if (loading) View.VISIBLE else View.GONE
+        }
 
         // Observe fetched recipes in ViewModel, and update the list of fetched recipes
         val recipesAdapter = RecipesAdapter(
@@ -54,18 +65,21 @@ class RecipeFragment : Fragment() {
 
         recipeViewModel.fetchedRecipes.observe(viewLifecycleOwner) { meals ->
             recipesAdapter.setMeals(meals)
+
+            noResultsTextView.visibility =
+                if (meals.isNullOrEmpty()) View.VISIBLE else View.GONE
         }
 
         // Update favorite statuses when changed
         recipeViewModel.favoriteRecipes.observe(viewLifecycleOwner) { _ ->
-            recipesAdapter.setMeals(recipeViewModel.fetchedRecipes.value ?: emptyList())
+            recipesAdapter.notifyDataSetChanged()
         }
 
         searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 // clean search query, ensure the user actually typed something
                 val trimmed = query?.trim()
-                if (!trimmed.isNullOrEmpty()) {
+                if (trimmed != null) {
                     Log.d("RecipeFragment", "Submitted search for: $trimmed")
 
                     // update fetched recipes

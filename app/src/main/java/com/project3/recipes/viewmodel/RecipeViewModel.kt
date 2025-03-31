@@ -16,13 +16,17 @@ import kotlinx.coroutines.launch
 class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
     private val _fetchedRecipes = MutableLiveData<List<Meal>>()
     private val _currentRecipeDetails = MutableLiveData<Meal>()
+    private val _isLoading = MutableLiveData(false)
 
+    val isLoading: LiveData<Boolean> get() = _isLoading
     val fetchedRecipes: LiveData<List<Meal>> get() = _fetchedRecipes
     val currentRecipeDetails: LiveData<Meal> get() = _currentRecipeDetails
     val favoriteRecipes: LiveData<List<Meal>> = repository.getFavoriteMeals().asLiveData()
 
     fun searchForRecipes(searchTerm: String) {
         viewModelScope.launch {
+            _isLoading.value = true
+
             try {
                 // convert each MealResponseItem to a Meal before updating fetched recipes
                 val response: MealResponse = repository.fetchMealsWithSearchTerm(searchTerm)
@@ -33,6 +37,8 @@ class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
 
             } catch (exception: Exception) {
                 Log.e("RecipeViewModel", "Error searching for recipes: ${exception.message}")
+            } finally {
+                _isLoading.value = false
             }
         }
     }

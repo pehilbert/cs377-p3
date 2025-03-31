@@ -14,6 +14,24 @@
         android:layout_margin="10dp"
         android:queryHint="Search for recipes..."/>
 
+    <ProgressBar
+        android:id="@+id/loading_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/no_results_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No recipes found."
+        android:gravity="center"
+        android:textSize="18sp"
+        android:visibility="gone"
+        android:padding="16dp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recipesRecyclerView"
         android:layout_height="wrap_content"
