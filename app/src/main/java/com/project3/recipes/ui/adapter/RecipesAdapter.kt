@@ -52,7 +52,10 @@ class RecipesAdapter(
     override fun onBindViewHolder(holder: RecipesViewHolder, position: Int) {
         val meal = meals[position]
         holder.recipeName.text = meal.name
-        holder.thumbnail.load(meal.thumbnail)
+        holder.thumbnail.load(meal.thumbnail) {
+            placeholder(R.drawable.thumbnail_placeholder)
+            error(R.drawable.thumbnail_error)
+        }
 
         // Set current recipe details in ViewModel, and navigate to recipe details screen
         // when the details button is clicked
@@ -61,8 +64,7 @@ class RecipesAdapter(
             holder.itemView.findNavController().navigate(R.id.nav_recipe_details)
         }
 
-        // Observe favorite recipes, manage favorite functionality depending on
-        // whether or not this recipe is in favorites
+        // Manage favorite functionality depending on whether or not this recipe is in favorites
         val inFavorites = recipeViewModel.favoriteRecipes.value?.any { it.id == meal.id } == true
 
         // Set star button filled or not depending on whether or not it is favorites screen
