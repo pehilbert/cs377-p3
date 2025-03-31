@@ -15,4 +15,6 @@
     <string name="instructions_title">Instructions</string>
     <string name="no_recipes_found_text">No recipes found.</string>
     <string name="no_favorite_recipes_text">No favorite recipes yet.</string>
+    <string name="meal_details_button_text">Details</string>
+    <string name="ingredients_title">Ingredients</string>
 </resources>
